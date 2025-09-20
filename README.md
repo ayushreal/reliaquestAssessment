@@ -146,3 +146,29 @@ and style guidelines with every build.
 To resolve any errors, you must run **spotlessApply** task.
 `./gradlew spotlessApply`
 
+## How to Run (Server, API, and Tests)
+### Prerequisites
+* Java 17
+* Gradle Wrapper (included): use ./gradlew (macOS/Linux) or .\gradlew (Windows)
+* Free ports: 8112 (mock server) and 8111 (API)
+* Windows note: PowerShell’s curl is an alias for Invoke-WebRequest. If you later use curl flags, prefer curl.exe or Invoke-RestMethod.
+
+### Start the Mock Employee API (Server)
+`.\gradlew server:bootRun`
+
+* Runs on http://localhost:8112, under /api/v1/employee.
+* Generates a fresh dataset on each start and randomly rate-limits (HTTP 429). Keep it running for stable data.
+
+### Start the Employee API
+`.\gradlew api:bootRun`
+
+* Runs on http://localhost:8111 by default.
+* To run on a different port:
+`./gradlew api:bootRun --args="--server.port=8113"`
+
+### Run the Tests
+`.\gradlew :api:test`
+
+* Tests avoid hitting the mock server (service is unit-tested with a mocked client; controller uses @WebMvcTest).
+* HTML report: api/build/reports/tests/test/index.html
+  `./gradlew :api:test --info`
