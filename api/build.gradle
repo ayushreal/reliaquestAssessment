@@ -3,9 +3,21 @@ plugins {
 }
 
 dependencies {
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // === API runtime ===
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'     // WebClient, reactive stack
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // @Valid, Jakarta Validation
+    implementation 'org.springframework.boot:spring-boot-starter-cache'      // Spring Cache abstraction
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'            // Fast in-memory cache
+
+    // (Optional) if your conventions don’t already add logging:
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+    // === Test ===
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'   // JUnit 5, MockMvc (for @WebMvcTest)
+    testImplementation 'com.github.tomakehurst:wiremock-jre8:2.35.2'         // Stubs downstream Mock Employee API
 }
 
+// If your conventions plugin *does not* already set the main class, keep this:
 springBoot {
     mainClass = 'com.reliaquest.api.ApiApplication'
 }

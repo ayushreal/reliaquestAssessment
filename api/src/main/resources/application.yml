@@ -1,2 +1,19 @@
-spring.application.name: employee-api
-server.port: 8111
+spring:
+  application:
+    name: employee-api
+  cache:
+    type: caffeine
+  main:
+    banner-mode: "off"
+
+server:
+  port: 8111
+
+employee:
+  # Mock server base URL
+  base-url: http://localhost:8112/api/v1/employee
+
+logging:
+  level:
+    root: INFO
+    com.reliaquest.api: DEBUG
